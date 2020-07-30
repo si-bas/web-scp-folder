@@ -1,0 +1,46 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, user-scalable=0")
+		title #{app.name}
+		meta(name="author", content="Avocacode")
+		meta(name="robots", content="noindex, nofollow")
+		base(href=app.baseUrl())
+		link(rel="icon", type="image/png", href="favicon.ico")
+		
+		block links
+		link#css-main(rel="stylesheet", href=app.baseUrl('css/codebase.min.css'))
+		block styles
+	body
+		#page-container(class="sidebar-mini sidebar-inverse side-scroll page-header-fixed page-header-glass page-header-inverse main-content-boxed side-trans-enabled")
+			include ./main/header.pug
+			main#main-container
+				div(class="bg-image bg-image-bottom", style="background-image: url('"+ app.baseUrl('img/photos/photo34@2x.jpg') +"');")
+					div(class="bg-primary-dark-op")
+						div(class="content content-top text-center overflow-hidden")
+							div(class="pt-50 pb-20")
+								h1(class="font-w700 text-white mb-10 js-appear-enabled animated fadeInUp", data-toggle="appear", data-class="animated fadeInUp") Dashboard
+								h2(class="h4 font-w400 text-white-op js-appear-enabled animated fadeInUp", data-toggle="appear", data-class="animated fadeInUp") Welcome to #{app.name}
+				div(class="content")
+					block content
+			footer#page-footer(class="opacity-0")
+				div(class="content py-20 font-size-xs clearfix")
+					div(class="float-right")
+						| Crafted with 
+						i(class="fa fa-heart text-pulse")
+						|  by 
+						a(class="font-w600", href=app.baseUrl(), target="_blank") DevPanda
+					div(class="float-left")
+						a(class="font-w600", href=app.baseUrl()) Version 1.0
+						|  © 
+						span(class="js-year-copy")
+		script(src=app.baseUrl("js/core/jquery.min.js"))
+		script(src=app.baseUrl("js/core/bootstrap.bundle.min.js"))
+		script(src=app.baseUrl("js/core/jquery.slimscroll.min.js"))
+		script(src=app.baseUrl("js/core/jquery.scrollLock.min.js"))
+		script(src=app.baseUrl("js/core/jquery.appear.min.js"))
+		script(src=app.baseUrl("js/core/jquery.countTo.min.js"))
+		script(src=app.baseUrl("js/core/js.cookie.min.js"))
+		script(src=app.baseUrl("js/codebase.js"))
+		block scripts

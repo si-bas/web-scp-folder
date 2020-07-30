@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+  nodejs:
+    build:
+      context: ./
+      dockerfile: ./docker/nodejs/Dockerfile
+    container_name: 'app-nodejs'
+    volumes:
+      - ./:/home/node/app
+    ports:
+      - 8080:8080
+    networks:
+      app_net:
+          ipv4_address: 172.1.1.1
+
+  mysql:
+    build: ./docker/mysql
+    command: --default-authentication-plugin=mysql_native_password --innodb_use_native_aio=0 --character-set-server=utf8 --collation-server=utf8_general_ci
+    container_name: 'app-mysql'
+    ports:
+      - 3306:3306
+    volumes: 
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/logs:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: homestead
+    networks:
+      app_net:
+          ipv4_address: 172.1.1.2
+
+networks:
+  app_net:
+      ipam:
+          driver: default
+          config:
+              - subnet: 172.1.0.0/16       

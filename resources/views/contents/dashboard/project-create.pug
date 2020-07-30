@@ -1,0 +1,49 @@
+#modal-create-project(class="modal", tabindex="-1", role="dialog", aria-labelledby="modal-create", aria-hidden="true")
+	div(class="modal-dialog", role="document")
+		div(class="modal-content")
+			div(class="block block-themed block-transparent mb-0")
+				div(class="block-header bg-primary-dark")
+					h3(class="block-title") Migrate New Project
+					div(class="block-options")
+						button(type="button", class="btn-block-option", data-dismiss="modal", aria-label="Close")
+							i(class="si si-close")
+				div(class="block-content")
+					div#project-warning(class="alert alert-danger", role="alert", style="display: none")
+					form(action=app.baseUrl('project/create'), method="POST")
+						div(class="form-group")
+							label 
+								| Project Name
+								span(class="text-danger") *
+							input(type="text", class="form-control", name="name", placeholder="Enter name. . .", required)
+						div(class="form-group")
+							label 
+								| Target Server
+								span(class="text-danger") *
+							select(class="js-select2 form-control", name="targetId", data-placeholder="Choose one. . .", required, style="width: 100%")
+								option
+								each target in targets 
+									option(value=target.id) #{target.name}
+						div(class="form-group")
+							label 
+								| Project Path
+								span(class="text-danger") *
+							input(type="text", class="form-control", name="pathSource", placeholder="Enter path. . .", required)
+						div(class="form-group")
+							label 
+								| Subdirectory on Destination Server
+								span(class="text-danger") *
+							select(class="js-select2 form-control", name="subdirectoryId", data-placeholder="Choose one. . .", required, style="width: 100%")
+								option
+								each subdirectory in subdirectories 
+									option(value=subdirectory.id) #{subdirectory.name}
+						div(class="form-group")
+							label 
+								| Destination Path
+								span(class="text-danger") *
+							input(type="text", class="form-control", name="pathDest", placeholder="Enter path. . .", required)
+						button(type="submit", style="display: none")
+			div(class="modal-footer")
+				button(type="button", class="btn btn-alt-secondary", data-dismiss="modal") Cancel
+				button(type="button", class="btn btn-alt-success", onClick="projectCreateSubmit()")
+					i(class="fa fa-check")
+					|  Submit

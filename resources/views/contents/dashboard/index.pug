@@ -1,0 +1,64 @@
+extends ./../../layouts/main.pug
+
+include ./../../plugins/datatables
+include ./../../plugins/select2
+
+block content
+    div(class="row invisible", data-toggle="appear")
+        // Row #1
+        div(class="col-6 col-xl-3")
+            a(class="block block-link-pop text-right bg-primary", href="javascript:void(0)")
+                div(class="block-content block-content-full clearfix border-black-op-b border-3x")
+                    div(class="float-left mt-10 d-none d-sm-block")
+                        i(class="fa fa-hdd-o fa-3x text-primary-light")
+                    div(class="font-size-h3 font-w600 text-white")
+                        span(data-toggle="countTo", data-speed="3000", data-to=storageAvail) 0
+                        |  GB
+                    div(class="font-size-sm font-w600 text-uppercase text-white-op") Storage Available
+        div(class="col-6 col-xl-3")
+            a(class="block block-link-pop text-right bg-earth", href="javascript:void(0)")
+                div(class="block-content block-content-full clearfix border-black-op-b border-3x")
+                    div(class="float-left mt-10 d-none d-sm-block")
+                        i(class="fa fa-hdd-o fa-3x text-earth-light")
+                    div(class="font-size-h3 font-w600 text-white")                    
+                        span(data-toggle="countTo", data-speed="3000", data-to=storageUsed) 0
+                        |  GB
+                    div(class="font-size-sm font-w600 text-uppercase text-white-op") Storage Used
+        div(class="col-6 col-xl-3")
+            a(class="block block-link-pop text-right bg-elegance", href="javascript:void(0)")
+                div(class="block-content block-content-full clearfix border-black-op-b border-3x")
+                    div(class="float-left mt-10 d-none d-sm-block")
+                        i(class="fa fa-check fa-3x text-elegance-light")
+                    div(class="font-size-h3 font-w600 text-white", data-toggle="countTo", data-speed="3000", data-to=projectSuccess) 0
+                    div(class="font-size-sm font-w600 text-uppercase text-white-op") Migration Success
+        div(class="col-6 col-xl-3")
+            a(class="block block-link-pop text-right bg-corporate", href="javascript:void(0)")
+                div(class="block-content block-content-full clearfix border-black-op-b border-3x")
+                    div(class="float-left mt-10 d-none d-sm-block")
+                        i(class="fa fa-times fa-3x text-corporate-light")
+                    div(class="font-size-h3 font-w600 text-white", data-toggle="countTo", data-speed="3000", data-to=projectFailed) 0
+                    div(class="font-size-sm font-w600 text-uppercase text-white-op") Migration Failed
+        // END Row #1
+    if message.length > 0
+        div(class="alert alert-danger", role="alert")
+            | #{message}
+    div#project-block(class="block")
+        div(class="block-header block-header-default")
+            h3(class="block-title") Projects List
+            div(class="block-options")
+                if (user)
+                    a(href="javascript:;", class="btn-block-option", data-toggle="modal", data-target="#modal-create-project")
+                        i(class="fa fa-plus")
+                        |  Migrate New Project
+                button(type="button", class="btn-block-option", data-toggle="block-option", data-action="fullscreen_toggle")
+                    i(class="si si-size-fullscreen")
+                button(type="button", class="btn-block-option", onclick="reloadProjectData()")
+                    i(class="si si-refresh")
+        div(class="block-content block-content-full")
+            include ./project-table.pug
+    if (user)
+        include ./project-create.pug
+block append scripts
+    script(src=app.baseUrl('js/plugins/chartjs/Chart.bundle.min.js'))
+    script(src=app.baseUrl('js/pages/be_pages_dashboard.js'))
+    script(src=app.baseUrl("custom/js/pages/dashboard.js"))

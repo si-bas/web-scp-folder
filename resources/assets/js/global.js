@@ -1,0 +1,1 @@
+const appUrl = document.head.querySelector("[property~=url][content]").content;
